@@ -1,0 +1,133 @@
+<div wm-slider>
+	<h1>Imagens</h1>
+	<p>
+		<img
+			width="513px"
+			height="342px"
+			src="http://files.cod3r.com.br/curso-web/imagem1.jpg"
+			alt="Imagem 1"
+		/>
+	</p>
+	<p>
+		<img
+			height="342px"
+			src="http://files.cod3r.com.br/curso-web/imagem2.gif"
+			alt="Gif"
+		/>
+	</p>
+
+	<p>
+		<img
+			height="342px"
+			class="circular"
+			src="http://files.cod3r.com.br/curso-web/imagem3.png"
+			alt="Circulo"
+		/>
+	</p>
+
+	<p class="texto">
+		<!-- Podemos escolher o lado da imagem -->
+		<img
+			src="http://files.cod3r.com.br/curso-web/avatar.jpg"
+			alt="Avatar"
+			height="50"
+			align="left"
+		/>
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, provident
+		culpa a, quia animi excepturi repudiandae velit porro sunt architecto iure
+		doloremque laborum vitae eveniet ad commodi numquam nihil laboriosam?
+	</p>
+	<p class="cidade"></p>
+	<p>
+		<!-- Para mostrar imagens conforme o tamanho da tela -->
+		<picture>
+			<source
+				srcset="http://files.cod3r.com.br/curso-web/logo-larga.png"
+				media="(min-width: 600px)"
+			/>
+			<img
+				src="http://files.cod3r.com.br/curso-web/logo-estreita.png"
+				alt="logo"
+			/>
+		</picture>
+	</p>
+</div>
+
+<script>
+	// Função principal que vai receber a tag, a posição inicial,
+	// a posição final, a distância a ser percorrida por vez e uma
+	// função callback
+	function mover(elemento, inicio, fim, passo, callback) {
+		const novoInicio = inicio - passo
+		if (novoInicio >= fim) {
+			elemento.style.left = `${novoInicio}px`
+			// Função nativa que recebe uma função que vai
+			// se repetir infinitamente com o intervalo determinado
+			setTimeout(() => mover(elemento, novoInicio, fim, passo, callback), 2)
+		} else {
+			callback()
+		}
+	}
+
+	const p = document.querySelector('[wm-slider] > p')
+	p.style.display = 'block'
+	mover(p, 1500, -520, 5, () => {
+		console.log('Terminou')
+	})
+
+	function slider() {
+		// Função nativa que retorna uma nodeList não é um array comum
+		const elemetos = document.querySelectorAll('[wm-slider] > p')
+		// Transformar nodeList em array
+		const slides = Array.from(elemetos)
+		exibirSlides(slides, slides[0])
+	}
+
+	function exibirSlides(slides, slide) {
+		slide.style.display = 'block'
+
+		// Propiedade nativa que retorna a largura da página
+		const inicio = innerWidth
+		// Propiedade que retorna a largura da area da tag
+		const fim = -slide.clientWidth
+
+		slide.style.left = `${inicio}`
+		mover(slide, inicio, fim, 5, () => {
+			slide.style.display = 'none'
+			exibirSlides(slides, getProximoSlide(slides, slide))
+		})
+	}
+
+	function getProximoSlide(lista, atual) {
+		// Função navita que retorna o index de determinado elemento
+		const i = lista.indexOf(atual) + 1
+		return i < lista.length ? lista[i] : lista[0]
+	}
+
+	slider()
+</script>
+
+<style>
+	.circular {
+		width: 513px;
+	}
+	.texto {
+		width: 400px;
+	}
+
+	.texto img {
+		margin-right: 10px;
+	}
+	.cidade {
+		width: 513px;
+		height: 342px;
+		background-image: url('http://files.cod3r.com.br/curso-web/imagem4.jpg');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 200%;
+	}
+	p {
+		position: absolute;
+		display: none;
+	}
+</style>

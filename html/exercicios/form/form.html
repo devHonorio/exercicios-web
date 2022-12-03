@@ -1,0 +1,48 @@
+<h1>Formulário</h1>
+
+<form method="POST">
+	<!-- Podemos ter inuts escondidos -->
+	<input type="hidden" name="id" value="2" />
+	<input type="text" name="nome" id="" />
+	<input type="password" name="senha" id="" />
+	<textarea name="bio" cols="30" rows="10"> </textarea>
+	<div>
+		<input type="radio" name="tipo" id="" value="admim" /> Admim
+		<input type="radio" name="tipo" id="" value="regular" /> Regular
+		<input type="radio" name="tipo" id="" value="professor" /> Professor
+	</div>
+	<div><input type="checkbox" name="ativo" id="" /> Ativo</div>
+	<select name="estado" id="">
+		<option value="AC">Acre</option>
+		<option value="BA">Bahia</option>
+		<option value="CE">Ceará</option>
+	</select>
+
+	<!-- seleções multiplas -->
+	<select name="interesse" multiple size="5" id="">
+		<option value="JS">C</option>
+		<option value="Java">Java</option>
+		<option value="PHP">JavaScript</option>
+		<option value="Python">Python</option>
+		<option value="GO">Go</option>
+		<option value="C">C</option>
+	</select>
+	<button formaction="http://127.0.0.1:5500/usuarios">Incluir</button>
+	<!-- Podemos colocar diretamente no botão a action desejada -->
+	<!-- também podemos mudar o method com formmethod -->
+	<button formaction="http://127.0.0.1:5500/usuarios/2">Alterar</button>
+</form>
+<style>
+	input,
+	textarea,
+	select {
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	/* selecionar tag e tipo da tag */
+	input[type='radio'],
+	input[type='checkbox'] {
+		display: inline;
+	}
+</style>
